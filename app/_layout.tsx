@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return (
@@ -6,28 +6,28 @@ export default function RootLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Users',
-          headerStyle: { backgroundColor: '#4F46E5' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+          title: "Users",
+          headerStyle: { backgroundColor: "#4F46E5" },
+          headerTintColor: "#fff",
+          headerTitleStyle: { fontWeight: "bold" },
         }}
       />
       <Stack.Screen
         name="details"
         options={{
-          title: 'User Details',
-          headerStyle: { backgroundColor: '#4F46E5' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+          title: "User Details",
+          headerStyle: { backgroundColor: "#4F46E5" },
+          headerTintColor: "#fff",
+          headerTitleStyle: { fontWeight: "bold" },
         }}
       />
       <Stack.Screen
-        name="adduser"
+        name="addUser"
         options={{
-          title: 'Add User',
-          headerStyle: { backgroundColor: '#4F46E5' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+          title: "Add User",
+          headerStyle: { backgroundColor: "#4F46E5" },
+          headerTintColor: "#fff",
+          headerTitleStyle: { fontWeight: "bold" },
         }}
       />
     </Stack>

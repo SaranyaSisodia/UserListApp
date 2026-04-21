@@ -122,7 +122,7 @@ export default function HomeScreen() {
       />
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => router.push("/adduser")}
+        onPress={() => router.push("/addUser")}
       >
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
