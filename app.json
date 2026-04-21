@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "UserListApp",
+    "slug": "UserListApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "userlistapp",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
