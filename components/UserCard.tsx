@@ -14,6 +14,7 @@ type User = {
     city: string;
     zipcode: string;
   };
+  isCustom?: boolean;
 };
 
 type Props = {
@@ -31,7 +32,14 @@ export default function UserCard({ user, onPress }: Props) {
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.name}>{user.name}</Text>
+        <View style={styles.nameRow}>
+          <Text style={styles.name}>{user.name}</Text>
+          {user.isCustom && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>Custom</Text>
+            </View>
+          )}
+        </View>
         <Text style={styles.detail}>✉️ {user.email}</Text>
         <Text style={styles.detail}>📞 {user.phone}</Text>
         <Text style={styles.detail}>🏢 {user.company.name}</Text>
@@ -71,15 +79,33 @@ const styles = StyleSheet.create({
   info: {
     flex: 1,
   },
+  nameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 4,
+  },
   name: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#111827",
-    marginBottom: 4,
   },
   detail: {
     fontSize: 13,
     color: "#6B7280",
     marginBottom: 2,
+  },
+  badge: {
+    backgroundColor: "#EEF2FF",
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#4F46E5",
+  },
+  badgeText: {
+    fontSize: 10,
+    color: "#4F46E5",
+    fontWeight: "600",
   },
 });

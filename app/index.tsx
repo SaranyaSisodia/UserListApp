@@ -1,6 +1,14 @@
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import UserCard from "../components/UserCard";
 
 type User = {
@@ -11,10 +19,12 @@ type User = {
   website: string;
   company: { name: string };
   address: { street: string; city: string; zipcode: string };
+  isCustom?: boolean;
 };
 
 export default function HomeScreen() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [apiUsers, setApiUsers] = useState<User[]>([]);
+  const [customUsers, setCustomUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -24,13 +34,19 @@ export default function HomeScreen() {
     fetchUsers();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      loadCustomUsers();
+    }, []),
+  );
+
   const fetchUsers = async () => {
     try {
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/users",
       );
       const data = await response.json();
-      setUsers(data);
+      setApiUsers(data);
     } catch (err) {
       setError("Failed to fetch users. Please try again.");
     } finally {
@@ -38,7 +54,20 @@ export default function HomeScreen() {
     }
   };
 
-  const filteredUsers = users.filter(
+  const loadCustomUsers = async () => {
+    try {
+      const stored = await AsyncStorage.getItem("customUsers");
+      if (stored) {
+        setCustomUsers(JSON.parse(stored));
+      }
+    } catch (err) {
+      console.log("Failed to load custom users", err);
+    }
+  };
+
+  const allUsers = [...customUsers, ...apiUsers];
+
+  const filteredUsers = allUsers.filter(
     (user) =>
       user.name.toLowerCase().includes(search.toLowerCase()) ||
       user.email.toLowerCase().includes(search.toLowerCase()),
@@ -91,6 +120,12 @@ export default function HomeScreen() {
           </View>
         }
       />
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => router.push("/adduser")}
+      >
+        <Text style={styles.fabText}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -130,5 +165,27 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: "#6B7280",
+  },
+  fab: {
+    position: "absolute",
+    bottom: 24,
+    right: 24,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#4F46E5",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#4F46E5",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  fabText: {
+    color: "#fff",
+    fontSize: 32,
+    fontWeight: "bold",
+    lineHeight: 36,
   },
 });

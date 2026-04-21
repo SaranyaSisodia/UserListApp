@@ -21,6 +21,15 @@ export default function RootLayout() {
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
+      <Stack.Screen
+        name="adduser"
+        options={{
+          title: 'Add User',
+          headerStyle: { backgroundColor: '#4F46E5' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
     </Stack>
   );
 }
